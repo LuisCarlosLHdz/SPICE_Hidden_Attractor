@@ -1,0 +1,44 @@
+
+*Fuentes de Voltaje
+VF F 0 -1
+VA A 0 0.35
+*------Z------
+R1 W m1 10e3
+R2 Z m1 10e3
+C1 m1 Z 10e-9 IC=10mV
+XOPAMPF1 0 m1 Z OPAMPF
+*------Y------
+R3 AX m2 10e3
+R4 F m2 10e3
+C2 m2 Y 10e-9 IC=10mV
+XOPAMPF2 0 m2 Y OPAMPF
+*------X------
+R9 V m3 10e3
+R10 mW m3 10e3
+R11 U m3 10e3
+C3 m3 X 10e-9 IC=10mV
+XOPAMPF3 0 m3 X OPAMPF
+*-----|X|-----
+R12 X m4 10e3
+R13 m4 n1 10e3
+R14 m4 n2 10e3
+D1 n1 n3 diode
+D2 n3 n2 diode
+R15 n1 m5 10e3
+R16 m5 AX 10e3
+XOPAMPF4 0 m4 n3 OPAMPF
+XOPAMPF5 n2 m5 AX OPAMPF
+*------Multiplicadores----
+E1 W 0 MULTIPLY X 0 Y 0 1
+R6 W m6 10e3
+R5 m6 mW 10e3
+XOPAMPF6 0 m6 mW OPAMPF
+E2 V 0 MULTIPLY Y 0 0 Z 1
+E3 U 0 MULTIPLY X 0 A 0 1
+*.tran 0.1n 50m
+.tran 0.1n 50m
+.probe
+.OPTIONS reltol=0.00001 	
+*abstol=1e-21
+#autoplot x=v(X) v(Z)
+.end
